@@ -44,25 +44,24 @@ void lcd_init();
 void lcd_clock();
 void lcd_data(uint8_t data);
 void lcd_cmd(uint8_t cmd);
-void lcd_Puts (char*s);
+void lcd_puts (char*s);
 void lcd_busy();
-void lcd_send_string(char *string);
 void lcd_setcursor( uint8_t x, uint8_t y );
 /* HD44780 driver IC */
 
 int main() {
-
+    /* inits */
     stdio_init_all();
     init_gps_lcd();
     lcd_init();
 
-    //lcd_cmd(0x80);
+    /* example */
 
-    lcd_send_string("Teszt");
-    lcd_setcursor(10,1); lcd_Puts("123456");
+    lcd_puts("Teszt");
+    lcd_setcursor(10,1); lcd_puts("123456");
     lcd_setcursor(0,2);
-    lcd_Puts("Szoveg"); 
-    lcd_setcursor(10,2); lcd_Puts("!@#$<>"); 
+    lcd_puts("Szoveg"); 
+    lcd_setcursor(10,2); lcd_puts("!@#$<>"); 
 
 
     while (true) {
@@ -98,7 +97,6 @@ void lcd_init(){
 
     sleep_ms(50); // wait
 
-
     gpio_put(RW, 0);
     gpio_put(RS, 0);
 
@@ -118,8 +116,6 @@ void lcd_init(){
         lcd_cmd(0x08 | (1<<LCD_E) | (0<<LCD_CUR) | (0<<LCD_BL));
         three_times -- ;
     }
-    
-    sleep_ms(5); // wait
 
     lcd_cmd(0x01);
     lcd_cmd(0x02);
@@ -175,16 +171,6 @@ void lcd_data(uint8_t data){
     lcd_clock();
 }
 
-void lcd_Puts (char*s) // string kuldes
-{
-	while (*s)
-	{
-		lcd_data(*s);
-		s++;
-	}
-	
-}
-
 void lcd_busy(){
 
 	uint8_t busy;
@@ -212,12 +198,10 @@ void lcd_busy(){
 	
 }
 
-void lcd_send_string(char *string){
+void lcd_puts(char *string){
 	while (*string != '\0'){
         lcd_data(*string ++);
-        //sleep_ms(1);
     }
-   
 }
 
 void lcd_setcursor( uint8_t x, uint8_t y )
