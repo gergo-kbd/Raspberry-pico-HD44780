@@ -35,9 +35,6 @@
 #define LCD_CUR 1
 #define LCD_BL 0
 
-
-void init_gps(void);
-
 /* HD44780 driver IC */
 void init_gps_lcd(void);
 void lcd_init();
@@ -119,7 +116,6 @@ void lcd_init(){
 
     lcd_cmd(0x01);
     lcd_cmd(0x02);
-
 }
 
 void lcd_clock(){
