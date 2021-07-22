@@ -35,6 +35,8 @@
 #define LCD_CUR 1
 #define LCD_BL 0
 
+/* DISPLAY SIZE 16 x 2 or 16 x 4 */
+
 /* HD44780 driver IC */
 void init_gps_lcd(void);
 void lcd_init();
